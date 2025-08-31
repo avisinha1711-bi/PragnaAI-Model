@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BioAI - Advancing Biological Research with AI</title>
+    <title>BioAI - Biological Research with AI</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
@@ -17,6 +17,7 @@
             background: linear-gradient(135deg, #0c2e44 0%, #1a4d6e 100%);
             color: #f5f5f5;
             line-height: 1.6;
+            min-height: 100vh;
         }
         
         .container {
@@ -112,6 +113,10 @@
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
         }
         
+        .btn:active {
+            transform: translateY(0);
+        }
+        
         .features {
             padding: 80px 0;
             background: rgba(255, 255, 255, 0.05);
@@ -192,6 +197,7 @@
             background: rgba(78, 205, 196, 0.2);
             border-radius: 8px;
             min-height: 100px;
+            text-align: left;
         }
         
         footer {
@@ -218,6 +224,23 @@
             color: #4ecdc4;
         }
         
+        .api-status {
+            margin-top: 20px;
+            padding: 10px;
+            border-radius: 5px;
+            text-align: center;
+        }
+        
+        .status-connected {
+            background: rgba(46, 204, 113, 0.2);
+            color: #2ecc71;
+        }
+        
+        .status-disconnected {
+            background: rgba(231, 76, 60, 0.2);
+            color: #e74c3c;
+        }
+        
         @media (max-width: 768px) {
             nav ul {
                 gap: 15px;
@@ -231,6 +254,10 @@
             .hero p {
                 font-size: 1.1rem;
             }
+            
+            .feature-grid {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
@@ -239,7 +266,7 @@
         <header>
             <div class="logo">
                 <div class="logo-icon">
-                    <i class="fas-dna"></i>
+                    <i class="fas fa-dna"></i>
                 </div>
                 <div class="logo-text">BioAI</div>
             </div>
@@ -300,6 +327,10 @@
                 <div class="result" id="result">
                     <p>Results will be displayed here</p>
                 </div>
+                
+                <div class="api-status" id="api-status">
+                    <p>Checking backend connection...</p>
+                </div>
             </div>
         </section>
 
@@ -319,7 +350,32 @@
     </div>
 
     <script>
-        function analyzeProtein() {
+        // Function to check backend connection
+        async function checkBackendConnection() {
+            const statusElement = document.getElementById('api-status');
+            
+            try {
+                // Replace with your actual backend API endpoint
+                const response = await fetch('https://your-backend-url.com/api/status', {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+                
+                if (response.ok) {
+                    statusElement.innerHTML = '<p class="status-connected"><i class="fas fa-check-circle"></i> Successfully connected to BioAI backend</p>';
+                } else {
+                    throw new Error('Backend not responding correctly');
+                }
+            } catch (error) {
+                statusElement.innerHTML = '<p class="status-disconnected"><i class="fas fa-exclamation-circle"></i> Could not connect to backend. Using demo mode.</p>';
+                console.error('Backend connection error:', error);
+            }
+        }
+        
+        // Function to analyze protein sequence
+        async function analyzeProtein() {
             const input = document.getElementById('protein-input').value;
             const resultDiv = document.getElementById('result');
             
@@ -337,21 +393,52 @@
             // Show loading state
             resultDiv.innerHTML = '<p><i class="fas fa-spinner fa-spin"></i> Analyzing sequence with BioAI model...</p>';
             
-            // Simulate API call to backend
-            setTimeout(() => {
-                const length = input.length;
-                const molecularWeight = (length * 110).toFixed(2);
-                const hydrophobicity = (Math.random() * 50).toFixed(2);
+            try {
+                // Replace with your actual backend API endpoint
+                const response = await fetch('https://your-backend-url.com/api/analyze', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ sequence: input })
+                });
                 
-                resultDiv.innerHTML = `
-                    <h3>Analysis Results</h3>
-                    <p><strong>Sequence Length:</strong> ${length} amino acids</p>
-                    <p><strong>Molecular Weight:</strong> ≈ ${molecularWeight} Da</p>
-                    <p><strong>Hydrophobicity Index:</strong> ${hydrophobicity}</p>
-                    <p><strong>Predicted Structure:</strong> Mainly alpha helices with some beta sheets</p>
-                    <p><strong>Confidence:</strong> 92.7%</p>
-                `;
-            }, 2000);
+                if (response.ok) {
+                    const data = await response.json();
+                    
+                    // Display results from backend
+                    resultDiv.innerHTML = `
+                        <h3>Analysis Results</h3>
+                        <p><strong>Sequence Length:</strong> ${data.length} amino acids</p>
+                        <p><strong>Molecular Weight:</strong> ≈ ${data.molecularWeight} Da</p>
+                        <p><strong>Hydrophobicity Index:</strong> ${data.hydrophobicity}</p>
+                        <p><strong>Predicted Structure:</strong> ${data.structure}</p>
+                        <p><strong>Confidence:</strong> ${data.confidence}%</p>
+                    `;
+                } else {
+                    throw new Error('Backend analysis failed');
+                }
+            } catch (error) {
+                // Fallback to demo mode if backend is unavailable
+                console.error('API call failed:', error);
+                
+                // Simulate analysis results
+                setTimeout(() => {
+                    const length = input.length;
+                    const molecularWeight = (length * 110).toFixed(2);
+                    const hydrophobicity = (Math.random() * 50).toFixed(2);
+                    
+                    resultDiv.innerHTML = `
+                        <h3>Analysis Results (Demo Mode)</h3>
+                        <p><strong>Sequence Length:</strong> ${length} amino acids</p>
+                        <p><strong>Molecular Weight:</strong> ≈ ${molecularWeight} Da</p>
+                        <p><strong>Hydrophobicity Index:</strong> ${hydrophobicity}</p>
+                        <p><strong>Predicted Structure:</strong> Mainly alpha helices with some beta sheets</p>
+                        <p><strong>Confidence:</strong> 92.7%</p>
+                        <p><em>Note: These are demo results. Connect to backend for accurate analysis.</em></p>
+                    `;
+                }, 2000);
+            }
         }
         
         // Smooth scrolling for navigation links
@@ -363,6 +450,11 @@
                     behavior: 'smooth'
                 });
             });
+        });
+        
+        // Check backend connection when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            checkBackendConnection();
         });
     </script>
 </body>
