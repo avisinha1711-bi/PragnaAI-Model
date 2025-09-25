@@ -19,6 +19,8 @@
             line-height: 1.6;
             min-height: 100vh;
             padding: 20px;
+            display: flex;
+            flex-direction: column;
         }
         
         .container {
@@ -29,6 +31,7 @@
             border-radius: 15px;
             padding: 30px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            flex: 1;
         }
         
         header {
@@ -247,6 +250,15 @@
             text-align: center;
         }
         
+        .footer-text {
+            text-align: center;
+            margin-top: 20px;
+            padding: 15px;
+            color: #a3c4c2;
+            font-size: 1rem;
+            font-weight: 500;
+        }
+        
         @media (max-width: 768px) {
             .container {
                 width: 95%;
@@ -268,6 +280,11 @@
             .disclaimer {
                 font-size: 0.8rem;
                 padding: 12px;
+            }
+            
+            .footer-text {
+                font-size: 0.9rem;
+                padding: 10px;
             }
         }
     </style>
@@ -355,6 +372,12 @@
             <i class="fas fa-exclamation-triangle"></i> 
             <strong>Important Notice:</strong> This page demonstrates a conceptual workflow for AI-assisted interpretation of infrared/photoacoustic spectral features. Real diagnostic systems analyze the entire spectrum, perform rigorous preprocessing and validation, and are evaluated in clinical studies. This demo is for education only and the real spectroscopy dataset model will soon be made.
         </div>
+    </div>
+    
+    <!-- Added footer text below the container -->
+    <div class="footer-text">
+        BioAI Cancer Diagnosis | AI Based Cancer Diagnosis Test Model<br>
+        © 2025 BioAI Research, Avi Sinha
     </div>
 
     <script>
