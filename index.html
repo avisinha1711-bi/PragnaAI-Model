@@ -143,6 +143,12 @@
             display: block;
         }
         
+        .feedback.error {
+            background: rgba(231, 76, 60, 0.2);
+            color: #e74c3c;
+            display: block;
+        }
+        
         .btn {
             display: block;
             width: 100%;
@@ -218,6 +224,20 @@
         
         .recommendation {
             margin-top: 15px;
+            font-size: 1.1rem;
+            line-height: 1.5;
+        }
+        
+        .patient-info {
+            margin-top: 20px;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            text-align: left;
+        }
+        
+        .patient-info p {
+            margin: 10px 0;
             font-size: 1.1rem;
         }
         
@@ -312,6 +332,22 @@
         </div>
 
         <div class="section">
+            <h2 class="section-title">Patient Information</h2>
+            
+            <div class="input-group">
+                <label for="patient-name">Patient Name</label>
+                <input type="text" id="patient-name" placeholder="Enter patient name...">
+                <div class="feedback" id="name-feedback"></div>
+            </div>
+            
+            <div class="input-group">
+                <label for="patient-age">Patient Age</label>
+                <input type="number" id="patient-age" min="1" max="120" placeholder="Enter patient age...">
+                <div class="feedback" id="age-feedback"></div>
+            </div>
+        </div>
+
+        <div class="section">
             <h2 class="section-title">Infrared Frequency Readings</h2>
             
             <div class="input-group">
@@ -364,6 +400,10 @@
                 <div class="risk-level" id="risk-level"></div>
                 <div id="probability-text">Probability: <span id="probability-value">0</span>%</div>
                 <div class="recommendation" id="recommendation"></div>
+                
+                <div class="patient-info" id="patient-info">
+                    <!-- Patient information will be displayed here -->
+                </div>
             </div>
         </div>
         
@@ -402,10 +442,14 @@
             // Check backend connection (but don't show status)
             checkBackendConnection();
             
-            // Set up event listeners
+            // Set up event listeners for frequency inputs
             document.querySelectorAll('.frequency-input').forEach((input, index) => {
                 input.addEventListener('input', () => validateInput(index));
             });
+            
+            // Set up event listeners for patient info
+            document.getElementById('patient-name').addEventListener('input', validatePatientInfo);
+            document.getElementById('patient-age').addEventListener('input', validatePatientInfo);
             
             document.getElementById('analyze-btn').addEventListener('click', analyzePatient);
             document.getElementById('next-btn').addEventListener('click', nextPatient);
@@ -429,6 +473,38 @@
             }
         }
 
+        // Validate patient information
+        function validatePatientInfo() {
+            const nameInput = document.getElementById('patient-name');
+            const ageInput = document.getElementById('patient-age');
+            const nameFeedback = document.getElementById('name-feedback');
+            const ageFeedback = document.getElementById('age-feedback');
+            
+            // Validate name
+            if (nameInput.value.trim() === '') {
+                nameFeedback.className = 'feedback error';
+                nameFeedback.innerHTML = '⚠️ Please enter patient name';
+                nameInput.style.borderColor = '#e74c3c';
+            } else {
+                nameFeedback.className = 'feedback';
+                nameInput.style.borderColor = '';
+            }
+            
+            // Validate age
+            if (!ageInput.value) {
+                ageFeedback.className = 'feedback error';
+                ageFeedback.innerHTML = '⚠️ Please enter patient age';
+                ageInput.style.borderColor = '#e74c3c';
+            } else if (parseInt(ageInput.value) < 1 || parseInt(ageInput.value) > 120) {
+                ageFeedback.className = 'feedback error';
+                ageFeedback.innerHTML = '⚠️ Please enter a valid age (1-120)';
+                ageInput.style.borderColor = '#e74c3c';
+            } else {
+                ageFeedback.className = 'feedback';
+                ageInput.style.borderColor = '';
+            }
+        }
+
         // Validate input and provide feedback
         function validateInput(index) {
             const input = document.getElementById(`input${index+1}`);
@@ -440,31 +516,58 @@
             }
             
             const value = parseFloat(input.value);
+            
+            // Check for negative values
+            if (value < 0) {
+                feedback.className = 'feedback error';
+                feedback.innerHTML = '❌ Negative values are not allowed';
+                input.style.borderColor = '#e74c3c';
+                return;
+            }
+            
             const mean = NORMAL_MEANS[index];
             const std = NORMAL_STDS[index];
             
             if (Math.abs(value - mean) <= std) {
                 feedback.className = 'feedback normal';
                 feedback.innerHTML = '✅ At normal level';
+                input.style.borderColor = '';
             } else if (value > mean) {
                 feedback.className = 'feedback high';
                 feedback.innerHTML = '⚠️ Higher than normal level';
+                input.style.borderColor = '';
             } else {
                 feedback.className = 'feedback low';
                 feedback.innerHTML = '⚠️ Lower than normal level';
+                input.style.borderColor = '';
             }
         }
 
         // Analyze patient data
         async function analyzePatient() {
+            // Validate patient info
+            const nameInput = document.getElementById('patient-name');
+            const ageInput = document.getElementById('patient-age');
+            
+            if (nameInput.value.trim() === '' || !ageInput.value || 
+                parseInt(ageInput.value) < 1 || parseInt(ageInput.value) > 120) {
+                validatePatientInfo();
+                alert('Please fill in valid patient information');
+                return;
+            }
+            
             // Get input values
             const values = [];
             let allFilled = true;
+            let hasNegative = false;
             
             for (let i = 1; i <= 4; i++) {
                 const input = document.getElementById(`input${i}`);
                 if (!input.value) {
                     allFilled = false;
+                    input.style.borderColor = '#e74c3c';
+                } else if (parseFloat(input.value) < 0) {
+                    hasNegative = true;
                     input.style.borderColor = '#e74c3c';
                 } else {
                     input.style.borderColor = '';
@@ -474,6 +577,11 @@
             
             if (!allFilled) {
                 alert('Please fill in all fields');
+                return;
+            }
+            
+            if (hasNegative) {
+                alert('Negative values are not allowed. Please enter positive values only.');
                 return;
             }
             
@@ -512,7 +620,7 @@
             }
             
             // Display results
-            displayResults(probability);
+            displayResults(probability, nameInput.value, ageInput.value);
             
             // Reset button
             document.getElementById('analyze-btn').innerHTML = 'Analyze Patient Data';
@@ -540,12 +648,13 @@
         }
 
         // Display results
-        function displayResults(probability) {
+        function displayResults(probability, name, age) {
             const resultDiv = document.getElementById('result');
             const probabilityFill = document.getElementById('probability-fill');
             const probabilityValue = document.getElementById('probability-value');
             const riskLevel = document.getElementById('risk-level');
             const recommendation = document.getElementById('recommendation');
+            const patientInfo = document.getElementById('patient-info');
             
             // Update probability meter
             const percentage = Math.round(probability * 100);
@@ -558,14 +667,21 @@
                 probabilityFill.style.background = 'linear-gradient(90deg, #e74c3c, #c0392b)';
                 riskLevel.innerHTML = '⚠️ HIGH RISK OF CANCER DETECTION';
                 riskLevel.style.color = '#e74c3c';
-                recommendation.textContent = 'MAY REQUIRE FURTHER DIAGNOSIS';
+                recommendation.innerHTML = `<strong>${name}</strong> has a high probability of cancer detection and may require further diagnosis through biopsy sample analysis, CT scans, MRI, or X-rays.`;
             } else {
                 resultDiv.className = 'result low-risk';
                 probabilityFill.style.background = 'linear-gradient(90deg, #2ecc71, #27ae60)';
-                riskLevel.innerHTML = '✅ LESS CHANCE OF CANCER DETECTION';
+                riskLevel.innerHTML = '✅ LOW RISK OF CANCER DETECTION';
                 riskLevel.style.color = '#2ecc71';
-                recommendation.textContent = 'Regular monitoring recommended';
+                recommendation.innerHTML = `<strong>${name}</strong> has a low probability of cancer detection but may need regular monitoring if symptoms persist.`;
             }
+            
+            // Display patient information
+            patientInfo.innerHTML = `
+                <p><strong>Patient Name:</strong> ${name}</p>
+                <p><strong>Patient Age:</strong> ${age}</p>
+                <p><strong>Diagnosis Date:</strong> ${new Date().toLocaleDateString()}</p>
+            `;
             
             // Show results
             resultDiv.style.display = 'block';
@@ -576,6 +692,11 @@
             patientCount++;
             
             // Clear inputs
+            document.getElementById('patient-name').value = '';
+            document.getElementById('patient-age').value = '';
+            document.getElementById('name-feedback').className = 'feedback';
+            document.getElementById('age-feedback').className = 'feedback';
+            
             for (let i = 1; i <= 4; i++) {
                 document.getElementById(`input${i}`).value = '';
                 document.getElementById(`feedback${i}`).className = 'feedback';
