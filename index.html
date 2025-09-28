@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BioAI – AI-powered Cancer Photoacoustic Diagnosis</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         * {
             margin: 0;
@@ -307,6 +308,36 @@
             font-weight: 500;
         }
         
+        /* Graph container styles */
+        .graph-container {
+            margin: 30px 0;
+            padding: 20px;
+            background: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e1e5eb;
+        }
+        
+        .graph-title {
+            font-size: 1.5rem;
+            color: #0d4a8c;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        
+        .graph-description {
+            font-size: 1rem;
+            color: #555;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .graph-canvas-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+        
         @media (max-width: 768px) {
             .container {
                 width: 95%;
@@ -333,6 +364,10 @@
             .footer-text {
                 font-size: 0.9rem;
                 padding: 10px;
+            }
+            
+            .graph-canvas-container {
+                height: 250px;
             }
         }
     </style>
@@ -410,6 +445,19 @@
             </div>
         </div>
 
+        <!-- Graph Section -->
+        <div class="section">
+            <h2 class="section-title">Molecular Vibration Analysis</h2>
+            
+            <div class="graph-container">
+                <h3 class="graph-title">Molecular Vibration Spectrum</h3>
+                <p class="graph-description">Visual representation of the molecular vibration frequencies detected in the sample</p>
+                <div class="graph-canvas-container">
+                    <canvas id="vibration-graph"></canvas>
+                </div>
+            </div>
+        </div>
+
         <div class="section">
             <h2 class="section-title">Diagnosis Results</h2>
             
@@ -465,6 +513,7 @@
         // State
         let patientCount = 1;
         let backendAvailable = false;
+        let vibrationChart = null;
 
         // Initialize the app
         document.addEventListener('DOMContentLoaded', function() {
@@ -473,7 +522,10 @@
             
             // Set up event listeners for frequency inputs
             document.querySelectorAll('.frequency-input').forEach((input, index) => {
-                input.addEventListener('input', () => validateInput(index));
+                input.addEventListener('input', () => {
+                    validateInput(index);
+                    updateVibrationGraph();
+                });
             });
             
             // Set up event listeners for patient info
@@ -482,7 +534,111 @@
             
             document.getElementById('analyze-btn').addEventListener('click', analyzePatient);
             document.getElementById('next-btn').addEventListener('click', nextPatient);
+            
+            // Initialize the vibration graph
+            initializeVibrationGraph();
         });
+
+        // Initialize the vibration graph
+        function initializeVibrationGraph() {
+            const ctx = document.getElementById('vibration-graph').getContext('2d');
+            
+            vibrationChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['-C=O (1720 cm⁻¹)', '-CH₃ (1300 cm⁻¹)', '-C-OH (1100 cm⁻¹)', '-O-H (3500 cm⁻¹)'],
+                    datasets: [{
+                        label: 'Vibration Intensity',
+                        data: [0, 0, 0, 0],
+                        borderColor: '#0d4a8c',
+                        backgroundColor: 'rgba(13, 74, 140, 0.1)',
+                        borderWidth: 2,
+                        pointBackgroundColor: '#0d4a8c',
+                        pointBorderColor: '#ffffff',
+                        pointBorderWidth: 2,
+                        pointRadius: 6,
+                        pointHoverRadius: 8,
+                        fill: true,
+                        tension: 0.4
+                    }, {
+                        label: 'Normal Range',
+                        data: NORMAL_MEANS,
+                        borderColor: '#2ecc71',
+                        backgroundColor: 'transparent',
+                        borderWidth: 2,
+                        borderDash: [5, 5],
+                        pointRadius: 0,
+                        fill: false
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'Intensity (MHz)',
+                                font: {
+                                    size: 14,
+                                    weight: 'bold'
+                                }
+                            },
+                            grid: {
+                                color: 'rgba(0, 0, 0, 0.1)'
+                            }
+                        },
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Molecular Vibration Types',
+                                font: {
+                                    size: 14,
+                                    weight: 'bold'
+                                }
+                            },
+                            grid: {
+                                display: false
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                            labels: {
+                                font: {
+                                    size: 12
+                                }
+                            }
+                        },
+                        tooltip: {
+                            backgroundColor: 'rgba(0, 0, 0, 0.7)',
+                            titleFont: {
+                                size: 14
+                            },
+                            bodyFont: {
+                                size: 13
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        // Update the vibration graph with current input values
+        function updateVibrationGraph() {
+            if (!vibrationChart) return;
+            
+            const values = [];
+            for (let i = 1; i <= 4; i++) {
+                const input = document.getElementById(`input${i}`);
+                values.push(input.value ? parseFloat(input.value) : 0);
+            }
+            
+            vibrationChart.data.datasets[0].data = values;
+            vibrationChart.update();
+        }
 
         // Check if backend is available (but don't display status)
         async function checkBackendConnection() {
@@ -729,6 +885,12 @@
             for (let i = 1; i <= 4; i++) {
                 document.getElementById(`input${i}`).value = '';
                 document.getElementById(`feedback${i}`).className = 'feedback';
+            }
+            
+            // Reset graph
+            if (vibrationChart) {
+                vibrationChart.data.datasets[0].data = [0, 0, 0, 0];
+                vibrationChart.update();
             }
             
             // Hide results
