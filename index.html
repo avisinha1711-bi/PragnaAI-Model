@@ -84,6 +84,12 @@
             box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
         }
         
+        /* Modified: Added dark black boundary for Patient Information and Infrared Frequency Readings */
+        .section.patient-info-section,
+        .section.infrared-readings-section {
+            border: 3px solid #000000;
+        }
+        
         .section-title {
             font-size: 1.8rem;
             color: #0d4a8c;
@@ -274,6 +280,10 @@
             margin-bottom: 20px;
             color: #0d4a8c;
             font-weight: 600;
+            padding: 15px;
+            background: #ffffff;
+            border-radius: 8px;
+            border: 2px solid #000000;
         }
         
         .next-patient {
@@ -435,7 +445,8 @@
             <i class="fas fa-sync fa-spin"></i> Checking backend connection...
         </div>
 
-        <div class="section">
+        <!-- Modified: Added patient-info-section class for dark black boundary -->
+        <div class="section patient-info-section">
             <h2 class="section-title">Patient Information</h2>
             
             <div class="input-group">
@@ -451,7 +462,8 @@
             </div>
         </div>
 
-        <div class="section">
+        <!-- Modified: Added infrared-readings-section class for dark black boundary -->
+        <div class="section infrared-readings-section">
             <!-- Moved patient counter here, just above the section title -->
             <div class="patient-counter" id="patient-counter">
                 Patient 1: Provide IR frequency readings in Mega Hertz (MHz)
