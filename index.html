@@ -731,6 +731,17 @@
             }
         }
 
+        // Compute risk based on deviation from normal values
+        function computeRisk(values) {
+            let score = 0;
+            values.forEach((val, idx) => {
+                if (Math.abs(val - NORMAL_MEANS[idx]) > NORMAL_STDS[idx]) {
+                    score++;
+                }
+            });
+            return score / values.length; // risk ratio
+        }
+
         // Analyze patient data
         async function analyzePatient() {
             // Validate patient info
@@ -800,11 +811,11 @@
                 } catch (error) {
                     console.error('Backend call failed:', error);
                     // Fall back to demo mode
-                    probability = simulatePrediction(values);
+                    probability = computeRisk(values);
                 }
             } else {
                 // Use demo mode
-                probability = simulatePrediction(values);
+                probability = computeRisk(values);
             }
             
             // Display results
@@ -817,22 +828,6 @@
             // Show next patient button
             document.getElementById('next-patient').style.display = 'block';
             document.getElementById('analyze-btn').style.display = 'none';
-        }
-
-        // Simulate prediction (for demo purposes)
-        function simulatePrediction(values) {
-            // This is a simplified simulation of your model's prediction logic
-            let score = 0;
-            for (let i = 0; i < values.length; i++) {
-                const deviation = (values[i] - NORMAL_MEANS[i]) / NORMAL_STDS[i];
-                score += Math.max(0, deviation);
-            }
-            
-            // Convert to probability (sigmoid-like function)
-            const rawProb = 1 / (1 + Math.exp(-score * 0.5 + 2));
-            
-            // Add some randomness to simulate real model behavior
-            return Math.min(0.99, rawProb + (Math.random() * 0.1 - 0.05));
         }
 
         // Display results
