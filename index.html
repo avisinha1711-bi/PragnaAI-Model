@@ -24,6 +24,69 @@
             flex-direction: column;
         }
         
+        /* Welcome Screen Styles */
+        .welcome-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #ffffff;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            transition: opacity 0.5s ease;
+        }
+        
+        .welcome-logo {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 40px;
+        }
+        
+        .welcome-logo-text {
+            font-size: 3.5rem;
+            font-weight: 700;
+            color: #0d2a4d;
+        }
+        
+        .welcome-subtitle {
+            font-size: 1.5rem;
+            color: #0d2a4d;
+            margin-top: 10px;
+            font-weight: 600;
+            text-align: center;
+        }
+        
+        .get-started-btn {
+            padding: 18px 50px;
+            background: linear-gradient(45deg, #0d4a8c, #0d7ba8);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.4rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+            margin-top: 40px;
+            box-shadow: 0 4px 6px rgba(13, 74, 140, 0.2);
+        }
+        
+        .get-started-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 7px 14px rgba(13, 74, 140, 0.3);
+            background: linear-gradient(45deg, #0a3a70, #0b6a8a);
+        }
+        
+        .get-started-btn:active {
+            transform: translateY(0);
+        }
+        
         .container {
             width: 90%;
             max-width: 1200px;
@@ -33,6 +96,7 @@
             padding: 30px;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
             flex: 1;
+            display: none; /* Initially hidden */
         }
         
         header {
@@ -343,6 +407,19 @@
         }
         
         @media (max-width: 768px) {
+            .welcome-logo-text {
+                font-size: 2.8rem;
+            }
+            
+            .welcome-subtitle {
+                font-size: 1.2rem;
+            }
+            
+            .get-started-btn {
+                padding: 15px 40px;
+                font-size: 1.2rem;
+            }
+            
             .container {
                 width: 95%;
                 padding: 20px;
@@ -377,7 +454,17 @@
     </style>
 </head>
 <body>
-    <div class="container">
+    <!-- Welcome Screen with Get Started Button -->
+    <div class="welcome-screen" id="welcome-screen">
+        <div class="welcome-logo">
+            <div class="welcome-logo-text">BioAI</div>
+        </div>
+        <div class="welcome-subtitle">AI-powered Cancer Photoacoustic Diagnosis</div>
+        <button class="get-started-btn" id="get-started-btn">GET STARTED</button>
+    </div>
+
+    <!-- Main Website Content (Initially Hidden) -->
+    <div class="container" id="main-content">
         <header>
             <div class="logo">
                 <div class="logo-text">BioAI</div>
@@ -520,6 +607,15 @@
 
         // Initialize the app
         document.addEventListener('DOMContentLoaded', function() {
+            // Set up Get Started button
+            document.getElementById('get-started-btn').addEventListener('click', function() {
+                document.getElementById('welcome-screen').style.opacity = '0';
+                setTimeout(function() {
+                    document.getElementById('welcome-screen').style.display = 'none';
+                    document.getElementById('main-content').style.display = 'block';
+                }, 500);
+            });
+            
             // Check backend connection (but don't show status)
             checkBackendConnection();
             
@@ -908,4 +1004,4 @@
         }
     </script>
 </body>
-</html> 
+</html>
