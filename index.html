@@ -407,6 +407,52 @@
             width: 100%;
         }
         
+        /* New styles for molecular reasons section */
+        .molecular-reasons {
+            margin-top: 25px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border: 2px solid #0d4a8c;
+            text-align: left;
+        }
+        
+        .molecular-reasons h4 {
+            font-size: 1.5rem;
+            color: #0d4a8c;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        
+        .molecular-reasons ul {
+            margin-left: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .molecular-reasons li {
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+            line-height: 1.5;
+        }
+        
+        .sequence-example {
+            margin-top: 15px;
+            padding: 15px;
+            background: #ffffff;
+            border-radius: 8px;
+            border: 1px solid #e1e5eb;
+            font-family: monospace;
+            font-size: 1.2rem;
+            text-align: center;
+        }
+        
+        .sequence-arrow {
+            display: inline-block;
+            margin: 0 15px;
+            font-size: 1.5rem;
+            color: #0d4a8c;
+        }
+        
         @media (max-width: 768px) {
             .welcome-logo-text {
                 font-size: 3.5rem;
@@ -450,6 +496,15 @@
             
             .graph-canvas-container {
                 height: 250px;
+            }
+            
+            .sequence-example {
+                font-size: 1rem;
+            }
+            
+            .sequence-arrow {
+                margin: 0 10px;
+                font-size: 1.2rem;
             }
         }
     </style>
@@ -555,6 +610,22 @@
                 <div class="risk-level" id="risk-level"></div>
                 <div id="probability-text">Probability: <span id="probability-value">0</span>%</div>
                 <div class="recommendation" id="recommendation"></div>
+                
+                <!-- Molecular Reasons Section - Only shown for high risk -->
+                <div class="molecular-reasons" id="molecular-reasons" style="display: none;">
+                    <h4>MOLECULAR REASONS OF CANCER</h4>
+                    <ul>
+                        <li>Mutation in genetic sequence</li>
+                        <li>Increased activity of Telomerase which stops contact inhibition</li>
+                        <li>Suppression of tumor suppressor gene</li>
+                    </ul>
+                    <div class="sequence-example">
+                        AAATCTGCTAGGCGAT <span class="sequence-arrow">→</span> AAATCTGCTAGGCGCT
+                    </div>
+                    <p style="text-align: center; margin-top: 10px; font-style: italic;">
+                        A single nucleotide change in the genetic sequence can be sufficient to cause cancer
+                    </p>
+                </div>
                 
                 <div class="patient-info" id="patient-info">
                     <!-- Patient information will be displayed here -->
@@ -940,6 +1011,7 @@
             const riskLevel = document.getElementById('risk-level');
             const recommendation = document.getElementById('recommendation');
             const patientInfo = document.getElementById('patient-info');
+            const molecularReasons = document.getElementById('molecular-reasons');
             
             // Update probability meter
             const percentage = Math.round(probability * 100);
@@ -953,12 +1025,18 @@
                 riskLevel.innerHTML = '⚠️ HIGH RISK OF CANCER DETECTION';
                 riskLevel.style.color = '#c0392b';
                 recommendation.innerHTML = `<strong>${name}</strong> has a high probability of cancer detection and may require further diagnosis through biopsy sample analysis, CT scans, MRI, or X-rays.`;
+                
+                // Show molecular reasons section for high risk
+                molecularReasons.style.display = 'block';
             } else {
                 resultDiv.className = 'result low-risk';
                 probabilityFill.style.background = 'linear-gradient(90deg, #2ecc71, #27ae60)';
                 riskLevel.innerHTML = '✅ LOW RISK OF CANCER DETECTION';
                 riskLevel.style.color = '#27ae60';
                 recommendation.innerHTML = `<strong>${name}</strong> has a low probability of cancer detection but may need regular monitoring if symptoms persist.`;
+                
+                // Hide molecular reasons section for low risk
+                molecularReasons.style.display = 'none';
             }
             
             // Display patient information
