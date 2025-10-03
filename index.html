@@ -724,6 +724,30 @@
             background: linear-gradient(45deg, #0a3a70, #0b6a8a);
         }
         
+        /* New styles for test suggestions */
+        .test-suggestions {
+            margin-top: 15px;
+            padding: 15px;
+            background: #e8f4ff;
+            border-radius: 8px;
+            border-left: 4px solid #0d4a8c;
+        }
+        
+        .test-suggestions h5 {
+            font-size: 1.1rem;
+            color: #0d4a8c;
+            margin-bottom: 10px;
+        }
+        
+        .test-suggestions ul {
+            margin-left: 20px;
+            color: #0d4a8c;
+        }
+        
+        .test-suggestions li {
+            margin-bottom: 5px;
+        }
+        
         @media (max-width: 768px) {
             .welcome-logo-text {
                 font-size: 3.5rem;
@@ -937,8 +961,16 @@
                         </div>
                     </div>
                     
+                    <!-- Test Suggestions Based on Probability -->
+                    <div class="test-suggestions" id="test-suggestions">
+                        <h5>Recommended Tests Based on Your Risk Level:</h5>
+                        <ul id="suggested-tests-list">
+                            <!-- Suggested tests will be populated here -->
+                        </ul>
+                    </div>
+                    
                     <div class="test-options">
-                        <h4>Select Recommended Tests</h4>
+                        <h4>Select Diagnostic Tests</h4>
                         <div class="test-grid">
                             <div class="test-option" data-test="biopsy">
                                 <input type="checkbox" class="test-checkbox" id="test-biopsy">
@@ -1153,7 +1185,7 @@
                 }
             });
             
-            // Set default tests based on probability
+            // Clear all checkboxes first
             document.querySelectorAll('.test-checkbox').forEach(checkbox => {
                 checkbox.checked = false;
             });
@@ -1161,25 +1193,46 @@
                 option.classList.remove('selected');
             });
             
-            // Pre-select tests based on probability
+            // Set test suggestions based on probability
+            const suggestionsList = document.getElementById('suggested-tests-list');
+            suggestionsList.innerHTML = '';
+            
             if (currentProbability > 0.8) {
-                // High probability - select all critical tests
+                // High probability - suggest Biopsy, Blood Test, CT Scan
+                suggestionsList.innerHTML = `
+                    <li><strong>Biopsy</strong> - Recommended for tissue analysis</li>
+                    <li><strong>Blood Test</strong> - Recommended for cancer markers</li>
+                    <li><strong>CT Scan</strong> - Recommended for detailed imaging</li>
+                `;
+                
+                // Pre-select these tests
                 document.getElementById('test-biopsy').checked = true;
                 document.querySelector('.test-option[data-test="biopsy"]').classList.add('selected');
+                document.getElementById('test-blood').checked = true;
+                document.querySelector('.test-option[data-test="blood-test"]').classList.add('selected');
                 document.getElementById('test-ct').checked = true;
                 document.querySelector('.test-option[data-test="ct-scan"]').classList.add('selected');
-                document.getElementById('test-mri').checked = true;
-                document.querySelector('.test-option[data-test="mri"]').classList.add('selected');
             } else if (currentProbability >= 0.5) {
-                // Medium probability - select standard tests
-                document.getElementById('test-ct').checked = true;
-                document.querySelector('.test-option[data-test="ct-scan"]').classList.add('selected');
+                // Medium probability - suggest Biopsy and Blood Test
+                suggestionsList.innerHTML = `
+                    <li><strong>Biopsy</strong> - Recommended for tissue analysis</li>
+                    <li><strong>Blood Test</strong> - Recommended for cancer markers</li>
+                `;
+                
+                // Pre-select these tests
+                document.getElementById('test-biopsy').checked = true;
+                document.querySelector('.test-option[data-test="biopsy"]').classList.add('selected');
                 document.getElementById('test-blood').checked = true;
                 document.querySelector('.test-option[data-test="blood-test"]').classList.add('selected');
             } else {
-                // Low probability - select routine tests
-                document.getElementById('test-blood').checked = true;
-                document.querySelector('.test-option[data-test="blood-test"]').classList.add('selected');
+                // Low probability - suggest optional Blood Test
+                suggestionsList.innerHTML = `
+                    <li><strong>Blood Test</strong> - Optional screening test</li>
+                `;
+                
+                // Don't pre-select, but make it easy to select
+                document.getElementById('test-blood').checked = false;
+                document.querySelector('.test-option[data-test="blood-test"]').classList.remove('selected');
             }
             
             // Set default date (tomorrow)
