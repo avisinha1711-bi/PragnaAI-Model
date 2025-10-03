@@ -453,6 +453,277 @@
             color: #0d4a8c;
         }
         
+        /* New styles for action buttons */
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .action-btn {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+        }
+        
+        .action-btn.schedule {
+            background: linear-gradient(45deg, #0d4a8c, #0d7ba8);
+            color: white;
+        }
+        
+        .action-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 7px 14px rgba(13, 74, 140, 0.3);
+        }
+        
+        /* New styles for redirect page */
+        .redirect-page {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #ffffff;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            display: none;
+        }
+        
+        .redirect-content {
+            text-align: center;
+            padding: 40px;
+            background: #f8f9fa;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            width: 90%;
+        }
+        
+        .redirect-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #0d2a4d;
+            margin-bottom: 20px;
+        }
+        
+        .redirect-message {
+            font-size: 1.2rem;
+            color: #0d4a8c;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+        
+        .back-btn {
+            padding: 15px 30px;
+            background: linear-gradient(45deg, #0d4a8c, #0d7ba8);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+            box-shadow: 0 4px 6px rgba(13, 74, 140, 0.2);
+        }
+        
+        .back-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 7px 14px rgba(13, 74, 140, 0.3);
+            background: linear-gradient(45deg, #0a3a70, #0b6a8a);
+        }
+        
+        /* New styles for scheduling options */
+        .scheduling-options {
+            margin-top: 20px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border: 2px solid #0d4a8c;
+            text-align: left;
+            display: none;
+        }
+        
+        .scheduling-title {
+            font-size: 1.5rem;
+            color: #0d4a8c;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        
+        .scheduling-urgency {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .urgency-option {
+            flex: 1;
+            min-width: 200px;
+            margin: 10px;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 2px solid transparent;
+        }
+        
+        .urgency-option:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .urgency-option.selected {
+            border-color: #0d4a8c;
+            background: rgba(13, 74, 140, 0.1);
+        }
+        
+        .urgency-high {
+            background: #ffeaea;
+            border-color: #e74c3c;
+        }
+        
+        .urgency-medium {
+            background: #fff3cd;
+            border-color: #ffc107;
+        }
+        
+        .urgency-low {
+            background: #e8f7ef;
+            border-color: #2ecc71;
+        }
+        
+        .urgency-icon {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+        
+        .urgency-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        
+        .urgency-desc {
+            font-size: 0.9rem;
+            color: #555;
+        }
+        
+        .test-options {
+            margin-top: 20px;
+        }
+        
+        .test-options h4 {
+            font-size: 1.3rem;
+            color: #0d4a8c;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        
+        .test-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .test-option {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            background: #ffffff;
+            border-radius: 8px;
+            border: 1px solid #e1e5eb;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .test-option:hover {
+            background: #f0f7ff;
+            border-color: #0d4a8c;
+        }
+        
+        .test-option.selected {
+            background: rgba(13, 74, 140, 0.1);
+            border-color: #0d4a8c;
+        }
+        
+        .test-checkbox {
+            margin-right: 10px;
+        }
+        
+        .test-name {
+            font-size: 1rem;
+            font-weight: 500;
+        }
+        
+        .schedule-form {
+            margin-top: 20px;
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+        
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #e1e5eb;
+            border-radius: 8px;
+            font-size: 1rem;
+        }
+        
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+            outline: none;
+            border-color: #0d4a8c;
+            box-shadow: 0 0 0 3px rgba(13, 74, 140, 0.2);
+        }
+        
+        .form-row {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .form-row .form-group {
+            flex: 1;
+        }
+        
+        .schedule-submit {
+            margin-top: 20px;
+            padding: 15px;
+            background: linear-gradient(45deg, #0d4a8c, #0d7ba8);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            width: 100%;
+        }
+        
+        .schedule-submit:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 7px 14px rgba(13, 74, 140, 0.3);
+            background: linear-gradient(45deg, #0a3a70, #0b6a8a);
+        }
+        
         @media (max-width: 768px) {
             .welcome-logo-text {
                 font-size: 3.5rem;
@@ -505,6 +776,34 @@
             .sequence-arrow {
                 margin: 0 10px;
                 font-size: 1.2rem;
+            }
+            
+            .action-buttons {
+                flex-direction: column;
+            }
+            
+            .redirect-title {
+                font-size: 2rem;
+            }
+            
+            .redirect-message {
+                font-size: 1rem;
+            }
+            
+            .scheduling-urgency {
+                flex-direction: column;
+            }
+            
+            .urgency-option {
+                min-width: 100%;
+            }
+            
+            .test-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .form-row {
+                flex-direction: column;
             }
         }
     </style>
@@ -611,6 +910,87 @@
                 <div id="probability-text">Probability: <span id="probability-value">0</span>%</div>
                 <div class="recommendation" id="recommendation"></div>
                 
+                <!-- Action buttons for all probability levels -->
+                <div class="action-buttons" id="action-buttons">
+                    <button class="action-btn schedule" id="schedule-btn">Schedule Follow-up Tests</button>
+                </div>
+                
+                <!-- Scheduling Options - Shown for all probability levels -->
+                <div class="scheduling-options" id="scheduling-options">
+                    <h3 class="scheduling-title">Schedule Follow-up Tests</h3>
+                    
+                    <div class="scheduling-urgency">
+                        <div class="urgency-option urgency-high" data-urgency="high">
+                            <div class="urgency-icon"><i class="fas fa-exclamation-triangle"></i></div>
+                            <div class="urgency-title">High Urgency</div>
+                            <div class="urgency-desc">Within 24-48 hours</div>
+                        </div>
+                        <div class="urgency-option urgency-medium" data-urgency="medium">
+                            <div class="urgency-icon"><i class="fas fa-clock"></i></div>
+                            <div class="urgency-title">Medium Urgency</div>
+                            <div class="urgency-desc">Within 1-2 weeks</div>
+                        </div>
+                        <div class="urgency-option urgency-low" data-urgency="low">
+                            <div class="urgency-icon"><i class="fas fa-calendar-check"></i></div>
+                            <div class="urgency-title">Low Urgency</div>
+                            <div class="urgency-desc">Within 1 month</div>
+                        </div>
+                    </div>
+                    
+                    <div class="test-options">
+                        <h4>Select Recommended Tests</h4>
+                        <div class="test-grid">
+                            <div class="test-option" data-test="biopsy">
+                                <input type="checkbox" class="test-checkbox" id="test-biopsy">
+                                <label for="test-biopsy" class="test-name">Biopsy</label>
+                            </div>
+                            <div class="test-option" data-test="ct-scan">
+                                <input type="checkbox" class="test-checkbox" id="test-ct">
+                                <label for="test-ct" class="test-name">CT Scan</label>
+                            </div>
+                            <div class="test-option" data-test="mri">
+                                <input type="checkbox" class="test-checkbox" id="test-mri">
+                                <label for="test-mri" class="test-name">MRI</label>
+                            </div>
+                            <div class="test-option" data-test="xray">
+                                <input type="checkbox" class="test-checkbox" id="test-xray">
+                                <label for="test-xray" class="test-name">X-Ray</label>
+                            </div>
+                            <div class="test-option" data-test="ultrasound">
+                                <input type="checkbox" class="test-checkbox" id="test-ultrasound">
+                                <label for="test-ultrasound" class="test-name">Ultrasound</label>
+                            </div>
+                            <div class="test-option" data-test="blood-test">
+                                <input type="checkbox" class="test-checkbox" id="test-blood">
+                                <label for="test-blood" class="test-name">Blood Test</label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="schedule-form">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="preferred-date">Preferred Date</label>
+                                <input type="date" id="preferred-date">
+                            </div>
+                            <div class="form-group">
+                                <label for="preferred-time">Preferred Time</label>
+                                <select id="preferred-time">
+                                    <option value="">Select time</option>
+                                    <option value="morning">Morning (8AM-12PM)</option>
+                                    <option value="afternoon">Afternoon (12PM-4PM)</option>
+                                    <option value="evening">Evening (4PM-7PM)</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="additional-notes">Additional Notes (Optional)</label>
+                            <textarea id="additional-notes" rows="3" placeholder="Any specific concerns or requirements..."></textarea>
+                        </div>
+                        <button class="schedule-submit" id="schedule-submit">Confirm Schedule</button>
+                    </div>
+                </div>
+                
                 <!-- Molecular Reasons Section - Only shown for high risk -->
                 <div class="molecular-reasons" id="molecular-reasons" style="display: none;">
                     <h4>MOLECULAR REASONS OF CANCER</h4>
@@ -658,6 +1038,15 @@
         BioAI Cancer Diagnosis | AI Based Cancer Diagnosis Test Model<br>
         © 2025 BioAI Research, Avi Sinha
     </div>
+    
+    <!-- Redirect Page -->
+    <div class="redirect-page" id="redirect-page">
+        <div class="redirect-content">
+            <h2 class="redirect-title">PROTOTYPE MODEL</h2>
+            <p class="redirect-message">This is a prototype model. The actual model will redirect you to an authorized lab test website integrated with BioAI.</p>
+            <button class="back-btn" id="back-btn">Back to Diagnosis</button>
+        </div>
+    </div>
 
     <script>
         // Configuration
@@ -676,6 +1065,8 @@
         let patientCount = 1;
         let backendAvailable = false;
         let vibrationChart = null;
+        let autoTriggerTimeout = null;
+        let currentProbability = 0;
 
         // Initialize the app
         document.addEventListener('DOMContentLoaded', function() {
@@ -696,6 +1087,10 @@
                 input.addEventListener('input', () => {
                     validateInput(index);
                     updateVibrationGraph();
+                    
+                    // Auto-trigger analysis when all inputs are filled
+                    clearTimeout(autoTriggerTimeout);
+                    autoTriggerTimeout = setTimeout(autoTriggerAnalysis, 1000);
                 });
             });
             
@@ -706,9 +1101,146 @@
             document.getElementById('analyze-btn').addEventListener('click', analyzePatient);
             document.getElementById('next-btn').addEventListener('click', nextPatient);
             
+            // Set up action buttons
+            document.getElementById('schedule-btn').addEventListener('click', function() {
+                document.getElementById('scheduling-options').style.display = 'block';
+                prefillSchedulingOptions();
+            });
+            
+            document.getElementById('back-btn').addEventListener('click', function() {
+                document.getElementById('redirect-page').style.display = 'none';
+            });
+            
+            // Set up scheduling options
+            document.querySelectorAll('.urgency-option').forEach(option => {
+                option.addEventListener('click', function() {
+                    document.querySelectorAll('.urgency-option').forEach(opt => {
+                        opt.classList.remove('selected');
+                    });
+                    this.classList.add('selected');
+                });
+            });
+            
+            document.querySelectorAll('.test-option').forEach(option => {
+                option.addEventListener('click', function() {
+                    const checkbox = this.querySelector('.test-checkbox');
+                    checkbox.checked = !checkbox.checked;
+                    this.classList.toggle('selected', checkbox.checked);
+                });
+            });
+            
+            document.getElementById('schedule-submit').addEventListener('click', submitSchedule);
+            
             // Initialize the vibration graph
             initializeVibrationGraph();
         });
+
+        // Prefill scheduling options based on probability
+        function prefillSchedulingOptions() {
+            // Set urgency based on probability
+            let urgencyLevel = 'low';
+            if (currentProbability > 0.8) {
+                urgencyLevel = 'high';
+            } else if (currentProbability >= 0.5) {
+                urgencyLevel = 'medium';
+            }
+            
+            document.querySelectorAll('.urgency-option').forEach(option => {
+                if (option.dataset.urgency === urgencyLevel) {
+                    option.classList.add('selected');
+                } else {
+                    option.classList.remove('selected');
+                }
+            });
+            
+            // Set default tests based on probability
+            document.querySelectorAll('.test-checkbox').forEach(checkbox => {
+                checkbox.checked = false;
+            });
+            document.querySelectorAll('.test-option').forEach(option => {
+                option.classList.remove('selected');
+            });
+            
+            // Pre-select tests based on probability
+            if (currentProbability > 0.8) {
+                // High probability - select all critical tests
+                document.getElementById('test-biopsy').checked = true;
+                document.querySelector('.test-option[data-test="biopsy"]').classList.add('selected');
+                document.getElementById('test-ct').checked = true;
+                document.querySelector('.test-option[data-test="ct-scan"]').classList.add('selected');
+                document.getElementById('test-mri').checked = true;
+                document.querySelector('.test-option[data-test="mri"]').classList.add('selected');
+            } else if (currentProbability >= 0.5) {
+                // Medium probability - select standard tests
+                document.getElementById('test-ct').checked = true;
+                document.querySelector('.test-option[data-test="ct-scan"]').classList.add('selected');
+                document.getElementById('test-blood').checked = true;
+                document.querySelector('.test-option[data-test="blood-test"]').classList.add('selected');
+            } else {
+                // Low probability - select routine tests
+                document.getElementById('test-blood').checked = true;
+                document.querySelector('.test-option[data-test="blood-test"]').classList.add('selected');
+            }
+            
+            // Set default date (tomorrow)
+            const tomorrow = new Date();
+            tomorrow.setDate(tomorrow.getDate() + 1);
+            document.getElementById('preferred-date').valueAsDate = tomorrow;
+        }
+
+        // Submit schedule
+        function submitSchedule() {
+            const urgencyOption = document.querySelector('.urgency-option.selected');
+            if (!urgencyOption) {
+                alert('Please select an urgency level');
+                return;
+            }
+            
+            const selectedTests = Array.from(document.querySelectorAll('.test-checkbox:checked'))
+                .map(checkbox => checkbox.nextElementSibling.textContent);
+            
+            if (selectedTests.length === 0) {
+                alert('Please select at least one test');
+                return;
+            }
+            
+            const preferredDate = document.getElementById('preferred-date').value;
+            if (!preferredDate) {
+                alert('Please select a preferred date');
+                return;
+            }
+            
+            const preferredTime = document.getElementById('preferred-time').value;
+            if (!preferredTime) {
+                alert('Please select a preferred time');
+                return;
+            }
+            
+            // Show the redirect page instead of an alert
+            document.getElementById('redirect-page').style.display = 'flex';
+            
+            // Hide scheduling options
+            document.getElementById('scheduling-options').style.display = 'none';
+        }
+
+        // Auto-trigger analysis when all inputs are filled
+        function autoTriggerAnalysis() {
+            // Check if all frequency inputs have values
+            const allFilled = Array.from(document.querySelectorAll('.frequency-input'))
+                .every(input => input.value && input.value.trim() !== '');
+            
+            // Check if patient info is filled
+            const nameInput = document.getElementById('patient-name');
+            const ageInput = document.getElementById('patient-age');
+            const patientInfoFilled = nameInput.value.trim() !== '' && 
+                                     ageInput.value && 
+                                     parseInt(ageInput.value) >= 1 && 
+                                     parseInt(ageInput.value) <= 120;
+            
+            if (allFilled && patientInfoFilled) {
+                analyzePatient();
+            }
+        }
 
         // Initialize the vibration graph
         function initializeVibrationGraph() {
@@ -975,6 +1507,9 @@
                 probability = simulatePrediction(values);
             }
             
+            // Store current probability for scheduling
+            currentProbability = probability;
+            
             // Display results
             displayResults(probability, nameInput.value, ageInput.value);
             
@@ -1012,6 +1547,11 @@
             const recommendation = document.getElementById('recommendation');
             const patientInfo = document.getElementById('patient-info');
             const molecularReasons = document.getElementById('molecular-reasons');
+            const actionButtons = document.getElementById('action-buttons');
+            const schedulingOptions = document.getElementById('scheduling-options');
+            
+            // Hide scheduling options initially
+            schedulingOptions.style.display = 'none';
             
             // Update probability meter
             const percentage = Math.round(probability * 100);
@@ -1024,7 +1564,6 @@
                 probabilityFill.style.background = 'linear-gradient(90deg, #e74c3c, #c0392b)';
                 riskLevel.innerHTML = '⚠️ HIGH RISK OF CANCER DETECTION';
                 riskLevel.style.color = '#c0392b';
-                recommendation.innerHTML = `<strong>${name}</strong> has a high probability of cancer detection and may require further diagnosis through biopsy sample analysis, CT scans, MRI, or X-rays.`;
                 
                 // Show molecular reasons section for high risk
                 molecularReasons.style.display = 'block';
@@ -1033,11 +1572,22 @@
                 probabilityFill.style.background = 'linear-gradient(90deg, #2ecc71, #27ae60)';
                 riskLevel.innerHTML = '✅ LOW RISK OF CANCER DETECTION';
                 riskLevel.style.color = '#27ae60';
-                recommendation.innerHTML = `<strong>${name}</strong> has a low probability of cancer detection but may need regular monitoring if symptoms persist.`;
                 
                 // Hide molecular reasons section for low risk
                 molecularReasons.style.display = 'none';
             }
+            
+            // Set recommendation based on probability ranges
+            if (probability > 0.8) {
+                recommendation.innerHTML = `<strong>HIGH PRIORITY AND URGENT FOLLOW UP:</strong> <strong>${name}</strong> has a very high probability of cancer detection and requires immediate medical attention, including biopsy sample analysis, CT scans, MRI, or X-rays.`;
+            } else if (probability >= 0.5 && probability <= 0.8) {
+                recommendation.innerHTML = `<strong>SECONDARY DIAGNOSTICS:</strong> <strong>${name}</strong> has a moderate probability of cancer detection and should undergo secondary diagnostics as already in the system.`;
+            } else {
+                recommendation.innerHTML = `<strong>ROUTINE SCREENING FOLLOW UP:</strong> <strong>${name}</strong> has a low probability of cancer detection but should maintain routine screening follow-up.`;
+            }
+            
+            // Show action buttons for all probability levels
+            actionButtons.style.display = 'flex';
             
             // Display patient information
             patientInfo.innerHTML = `
@@ -1073,6 +1623,9 @@
             
             // Hide results
             document.getElementById('result').style.display = 'none';
+            
+            // Hide scheduling options
+            document.getElementById('scheduling-options').style.display = 'none';
             
             // Update patient counter
             document.getElementById('patient-counter').textContent = `Patient ${patientCount}: Provide IR frequency readings in Mega Hertz (MHz)`;
