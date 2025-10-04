@@ -907,16 +907,16 @@
                 <div class="feedback" id="age-feedback"></div>
             </div>
             
-            <!-- Added gender selection -->
+            <!-- Added gender selection with checkboxes -->
             <div class="gender-selection">
                 <label class="gender-label">Gender</label>
                 <div class="gender-options">
                     <div class="gender-option">
-                        <input type="radio" id="gender-male" name="gender" value="male">
+                        <input type="checkbox" id="gender-male" name="gender" value="male">
                         <label for="gender-male">Male</label>
                     </div>
                     <div class="gender-option">
-                        <input type="radio" id="gender-female" name="gender" value="female">
+                        <input type="checkbox" id="gender-female" name="gender" value="female">
                         <label for="gender-female">Female</label>
                     </div>
                 </div>
@@ -1182,8 +1182,8 @@
             document.getElementById('patient-age').addEventListener('input', validatePatientInfo);
             
             // Set up event listeners for gender selection
-            document.querySelectorAll('input[name="gender"]').forEach(radio => {
-                radio.addEventListener('change', validatePatientInfo);
+            document.querySelectorAll('input[name="gender"]').forEach(checkbox => {
+                checkbox.addEventListener('change', validatePatientInfo);
             });
             
             document.getElementById('analyze-btn').addEventListener('click', analyzePatient);
@@ -1295,6 +1295,9 @@
             const tomorrow = new Date();
             tomorrow.setDate(tomorrow.getDate() + 1);
             document.getElementById('preferred-date').valueAsDate = tomorrow;
+            
+            // Reset preferred time to default (empty)
+            document.getElementById('preferred-time').value = '';
         }
 
         // Submit schedule
@@ -1341,12 +1344,10 @@
             // Check if patient info is filled
             const nameInput = document.getElementById('patient-name');
             const ageInput = document.getElementById('patient-age');
-            const genderSelected = document.querySelector('input[name="gender"]:checked');
             const patientInfoFilled = nameInput.value.trim() !== '' && 
                                      ageInput.value && 
                                      parseInt(ageInput.value) >= 1 && 
-                                     parseInt(ageInput.value) <= 120 &&
-                                     genderSelected;
+                                     parseInt(ageInput.value) <= 120;
             
             if (allFilled && patientInfoFilled) {
                 analyzePatient();
@@ -1476,7 +1477,6 @@
         function validatePatientInfo() {
             const nameInput = document.getElementById('patient-name');
             const ageInput = document.getElementById('patient-age');
-            const genderFeedback = document.getElementById('gender-feedback');
             const nameFeedback = document.getElementById('name-feedback');
             const ageFeedback = document.getElementById('age-feedback');
             
@@ -1502,15 +1502,6 @@
             } else {
                 ageFeedback.className = 'feedback';
                 ageInput.style.borderColor = '';
-            }
-            
-            // Validate gender
-            const genderSelected = document.querySelector('input[name="gender"]:checked');
-            if (!genderSelected) {
-                genderFeedback.className = 'feedback error';
-                genderFeedback.innerHTML = '⚠️ Please select gender';
-            } else {
-                genderFeedback.className = 'feedback';
             }
         }
 
@@ -1557,12 +1548,11 @@
             // Validate patient info
             const nameInput = document.getElementById('patient-name');
             const ageInput = document.getElementById('patient-age');
-            const genderSelected = document.querySelector('input[name="gender"]:checked');
             
             if (nameInput.value.trim() === '' || !ageInput.value || 
-                parseInt(ageInput.value) < 1 || parseInt(ageInput.value) > 120 || !genderSelected) {
+                parseInt(ageInput.value) < 1 || parseInt(ageInput.value) > 120) {
                 validatePatientInfo();
-                alert('Please fill in all patient information including gender');
+                alert('Please fill in valid patient information');
                 return;
             }
             
@@ -1632,8 +1622,15 @@
             // Store current probability for scheduling
             currentProbability = probability;
             
+            // Get gender values
+            const selectedGenders = Array.from(document.querySelectorAll('input[name="gender"]:checked'))
+                .map(checkbox => checkbox.value);
+            const genderDisplay = selectedGenders.length > 0 
+                ? selectedGenders.map(g => g.charAt(0).toUpperCase() + g.slice(1)).join(', ')
+                : 'Not Specified';
+            
             // Display results
-            displayResults(probability, nameInput.value, ageInput.value, genderSelected.value);
+            displayResults(probability, nameInput.value, ageInput.value, genderDisplay);
             
             // Reset button
             document.getElementById('analyze-btn').innerHTML = 'Run Auto Analysis';
@@ -1715,7 +1712,7 @@
             patientInfo.innerHTML = `
                 <p><strong>Patient Name:</strong> ${name}</p>
                 <p><strong>Patient Age:</strong> ${age}</p>
-                <p><strong>Patient Gender:</strong> ${gender.charAt(0).toUpperCase() + gender.slice(1)}</p>
+                <p><strong>Patient Gender:</strong> ${gender}</p>
                 <p><strong>Diagnosis Date:</strong> ${new Date().toLocaleDateString()}</p>
             `;
             
@@ -1732,11 +1729,10 @@
             document.getElementById('patient-age').value = '';
             document.getElementById('name-feedback').className = 'feedback';
             document.getElementById('age-feedback').className = 'feedback';
-            document.getElementById('gender-feedback').className = 'feedback';
             
-            // Clear gender selection
-            document.querySelectorAll('input[name="gender"]').forEach(radio => {
-                radio.checked = false;
+            // Clear gender checkboxes
+            document.querySelectorAll('input[name="gender"]').forEach(checkbox => {
+                checkbox.checked = false;
             });
             
             for (let i = 1; i <= 4; i++) {
