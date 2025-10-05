@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BioAI – AI-powered Cancer Photoacoustic Diagnosis</title>
+    <title>BioAI Research – AI-powered Cancer Photoacoustic Diagnosis</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
@@ -115,8 +115,9 @@
             margin-bottom: 10px;
         }
         
+        /* Modified: Increased size of BioAI Research logo */
         .logo-text {
-            font-size: 3rem;
+            font-size: 4.5rem; /* Increased from 3rem */
             font-weight: 700;
             color: #0d2a4d;
         }
@@ -187,7 +188,7 @@
             box-shadow: 0 0 0 3px rgba(13, 74, 140, 0.2);
         }
         
-        /* New styles for gender selection */
+        /* Modified: Changed gender selection to radio buttons for single selection */
         .gender-selection {
             margin-top: 15px;
         }
@@ -797,7 +798,7 @@
             }
             
             .logo-text {
-                font-size: 2.5rem;
+                font-size: 3rem; /* Adjusted for mobile */
             }
             
             .section {
@@ -880,7 +881,8 @@
     <div class="container" id="main-content">
         <header>
             <div class="logo">
-                <div class="logo-text">BioAI</div>
+                <!-- Modified: Changed to BioAI Research with larger font size -->
+                <div class="logo-text">BioAI Research</div>
             </div>
             <div class="subtitle">AI-powered Cancer Photoacoustic Diagnosis</div>
             <div class="author">Developed by: Avi Sinha</div>
@@ -907,16 +909,16 @@
                 <div class="feedback" id="age-feedback"></div>
             </div>
             
-            <!-- Added gender selection with checkboxes -->
+            <!-- Modified: Changed to radio buttons for single selection -->
             <div class="gender-selection">
                 <label class="gender-label">Gender</label>
                 <div class="gender-options">
                     <div class="gender-option">
-                        <input type="checkbox" id="gender-male" name="gender" value="male">
+                        <input type="radio" id="gender-male" name="gender" value="male">
                         <label for="gender-male">Male</label>
                     </div>
                     <div class="gender-option">
-                        <input type="checkbox" id="gender-female" name="gender" value="female">
+                        <input type="radio" id="gender-female" name="gender" value="female">
                         <label for="gender-female">Female</label>
                     </div>
                 </div>
@@ -1182,8 +1184,8 @@
             document.getElementById('patient-age').addEventListener('input', validatePatientInfo);
             
             // Set up event listeners for gender selection
-            document.querySelectorAll('input[name="gender"]').forEach(checkbox => {
-                checkbox.addEventListener('change', validatePatientInfo);
+            document.querySelectorAll('input[name="gender"]').forEach(radio => {
+                radio.addEventListener('change', validatePatientInfo);
             });
             
             document.getElementById('analyze-btn').addEventListener('click', analyzePatient);
@@ -1623,10 +1625,9 @@
             currentProbability = probability;
             
             // Get gender values
-            const selectedGenders = Array.from(document.querySelectorAll('input[name="gender"]:checked'))
-                .map(checkbox => checkbox.value);
-            const genderDisplay = selectedGenders.length > 0 
-                ? selectedGenders.map(g => g.charAt(0).toUpperCase() + g.slice(1)).join(', ')
+            const selectedGender = document.querySelector('input[name="gender"]:checked');
+            const genderDisplay = selectedGender 
+                ? selectedGender.value.charAt(0).toUpperCase() + selectedGender.value.slice(1)
                 : 'Not Specified';
             
             // Display results
@@ -1730,9 +1731,9 @@
             document.getElementById('name-feedback').className = 'feedback';
             document.getElementById('age-feedback').className = 'feedback';
             
-            // Clear gender checkboxes
-            document.querySelectorAll('input[name="gender"]').forEach(checkbox => {
-                checkbox.checked = false;
+            // Clear gender radio buttons
+            document.querySelectorAll('input[name="gender"]').forEach(radio => {
+                radio.checked = false;
             });
             
             for (let i = 1; i <= 4; i++) {
