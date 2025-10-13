@@ -1418,10 +1418,6 @@
                     <div class="confidence-fill" style="width: 94.2%"></div>
                 </div>
             </div>
-            <p style="margin-top: 10px; font-size: 0.9rem;">
-                <i class="fas fa-sync-alt"></i> Last updated: <span id="last-updated">Today</span> | 
-                Lactic Acid Cases: <span id="training-cases">1,247</span>
-            </p>
         </div>
         
         <!-- Disclaimer Section -->
@@ -1467,8 +1463,6 @@
         let autoTriggerTimeout = null;
         let currentProbability = 0;
         let decisionLog = [];
-        let modelAccuracy = 94.2;
-        let trainingCases = 1247;
 
         // Initialize the app
         document.addEventListener('DOMContentLoaded', function() {
@@ -1548,17 +1542,7 @@
             // Add initial log entry
             addLogEntry("Lactic acid biomarker analysis system initialized");
             addLogEntry("Multi-agent collaboration system activated");
-            
-            // Update adaptive learning metrics
-            updateAdaptiveLearningMetrics();
         });
-
-        // Update adaptive learning metrics
-        function updateAdaptiveLearningMetrics() {
-            document.getElementById('model-accuracy').textContent = modelAccuracy.toFixed(1) + '%';
-            document.getElementById('training-cases').textContent = trainingCases.toLocaleString();
-            document.getElementById('last-updated').textContent = new Date().toLocaleDateString();
-        }
 
         // Simulate metabolic research
         function simulateMetabolicResearch() {
@@ -1723,13 +1707,6 @@
             
             // Log the scheduling action
             addLogEntry(`Scheduled ${selectedTests.join(', ')} with ${urgencyOption.dataset.urgency} urgency`);
-            
-            // Update adaptive learning (simulated)
-            trainingCases++;
-            if (Math.random() > 0.7) {
-                modelAccuracy = Math.min(99.9, modelAccuracy + 0.1);
-                updateAdaptiveLearningMetrics();
-            }
         }
 
         // Auto-trigger analysis when all inputs are filled
@@ -2159,14 +2136,6 @@
             
             // Add final log entry
             addLogEntry(`Lactic acid analysis complete - ${percentage}% probability with ${Math.round(confidence)}% confidence`);
-            
-            // Simulate model learning
-            if (Math.random() > 0.8) {
-                trainingCases++;
-                modelAccuracy = Math.min(99.9, modelAccuracy + 0.05);
-                updateAdaptiveLearningMetrics();
-                addLogEntry("Lactic acid model updated with new case data");
-            }
         }
 
         // Reset for next patient
