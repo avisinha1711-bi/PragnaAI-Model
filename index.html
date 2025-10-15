@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BioAI Research – AI-powered Cancer Photoacoustic Diagnosis</title>
+    <title>PragnaAI Research – AI-powered Cancer Photoacoustic Diagnosis</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
@@ -1074,20 +1074,20 @@
     <!-- Welcome Screen with Get Started Button -->
     <div class="welcome-screen" id="welcome-screen">
         <div class="welcome-logo">
-            <div class="welcome-logo-text">BioAI Research</div>
+            <div class="welcome-logo-text">PragnaAI</div>
         </div>
         <button class="get-started-btn" id="get-started-btn">GET STARTED</button>
-        <div class="tagline">Intersection of Biology with Technology</div>
+        <div class="tagline">Intersection of Biology and Technology</div>
     </div>
 
     <!-- Main Website Content (Initially Hidden) -->
     <div class="container" id="main-content">
         <header>
             <div class="logo">
-                <div class="logo-text">BioAI Research</div>
+                <div class="logo-text">PragnaAI Research</div>
             </div>
             <div class="subtitle">AI-powered Cancer Photoacoustic Diagnosis</div>
-            <div class="author">Developed by: Avi Sinha</div>
+            <div class="author">"Intelligence that perceives diseases before it manifests."</div>
         </header>
 
         <!-- Lactic Acid Structure Information -->
@@ -1205,7 +1205,7 @@
                 <h3>Patient Diagnosis</h3>
                 
                 <!-- Enhanced AI Reasoning Section -->
-                <div class="ai-reasoning" id="ai-reasoning">
+                <div class="ai-reasoning" id="ai-reasoning" style="display: none;">
                     <h4>AI Reasoning Process</h4>
                     <p id="reasoning-text">The AI is analyzing lactic acid molecular vibration patterns and comparing them to established cancer biomarkers...</p>
                     
@@ -1391,19 +1391,6 @@
                 </div>
             </div>
         </div>
-
-        <!-- Graph Section -->
-        <div class="section">
-            <h2 class="section-title">Lactic Acid Molecular Vibration Analysis</h2>
-            
-            <div class="graph-container">
-                <h3 class="graph-title">Lactic Acid Molecular Vibration Spectrum</h3>
-                <p class="graph-description">Visual representation of lactic acid molecular vibration frequencies as cancer biomarkers</p>
-                <div class="graph-canvas-container">
-                    <canvas id="vibration-graph"></canvas>
-                </div>
-            </div>
-        </div>
         
         <!-- Adaptive Learning Section -->
         <div class="adaptive-learning" id="adaptive-learning">
@@ -1411,7 +1398,7 @@
             <p>This system continuously improves its diagnostic accuracy by learning from new lactic acid biomarker data and clinical outcomes.</p>
             <div class="confidence-meter">
                 <div class="confidence-label">
-                    <span>Model Accuracy:</span>
+                    <span>Synthetic demo metric:</span>
                     <span id="model-accuracy">94.2%</span>
                 </div>
                 <div class="confidence-bar">
@@ -1429,15 +1416,15 @@
     
     <!-- Added footer text below the container -->
     <div class="footer-text">
-        BioAI Cancer Diagnosis | Lactic Acid Biomarker Analysis<br>
-        © 2025 BioAI Research, Avi Sinha
+        PragnaAI Cancer Diagnosis<br>
+        © 2025 PragnaAI Research
     </div>
     
     <!-- Redirect Page -->
     <div class="redirect-page" id="redirect-page">
         <div class="redirect-content">
             <h2 class="redirect-title">PROTOTYPE MODEL</h2>
-            <p class="redirect-message">This is a prototype model. The actual model will redirect you to an authorized lab test website integrated with BioAI.</p>
+            <p class="redirect-message">This is a prototype model. The actual model will redirect you to an authorized lab test website integrated with PragnaAI.</p>
             <button class="back-btn" id="back-btn">Back to Diagnosis</button>
         </div>
     </div>
@@ -2058,6 +2045,10 @@
             const confidenceValue = document.getElementById('confidence-value');
             const confidenceFill = document.getElementById('confidence-fill');
             const proactiveText = document.getElementById('proactive-text');
+            const aiReasoning = document.getElementById('ai-reasoning');
+            
+            // Show AI reasoning section
+            aiReasoning.style.display = 'block';
             
             // Hide scheduling options initially
             schedulingOptions.style.display = 'none';
@@ -2166,6 +2157,7 @@
             
             // Hide results
             document.getElementById('result').style.display = 'none';
+            document.getElementById('ai-reasoning').style.display = 'none';
             
             // Hide scheduling options
             document.getElementById('scheduling-options').style.display = 'none';
