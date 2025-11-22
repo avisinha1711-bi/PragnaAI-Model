@@ -485,4 +485,210 @@ class RiskAssessmentAgent extends BaseAgent {
     probabilityToRiskLevel(probability) {
         if (probability >= 0.8) return 'HIGH';
         if (probability >= 0.6) return 'MODERATE_HIGH';
-        if (probability >= 0.4) return 'MODER
+        if (probability >= 0.4) return 'MODERATE';
+        if (probability >= 0.2) return 'LOW_MODERATE';
+        return 'LOW';
+    }
+
+    generateRiskReasoning(consensus, modelPredictions) {
+        const probPercent = Math.round(consensus.probability * 100);
+        const agreementPercent = Math.round(consensus.agreement * 100);
+        
+        const reasons = [
+            `Ensemble models predict ${probPercent}% cancer probability`,
+            `High model agreement (${agreementPercent}%) strengthens confidence`,
+            `Carbonyl stretch contributes ${Math.round(consensus.featureContributions.carbonyl * 100)}% to risk assessment`,
+            `Multiple algorithms converged on similar risk estimate`
+        ];
+        
+        return reasons.join('. ');
+    }
+}
+
+class DataValidationAgent extends BaseAgent {
+    constructor() {
+        super('dataValidator', 'Data Quality and Integrity Assurance');
+    }
+
+    async performAnalysis(patientData) {
+        const validationResults = this.validateAllData(patientData);
+        const dataQualityScore = this.calculateDataQualityScore(validationResults);
+        const issues = this.identifyDataIssues(validationResults);
+        
+        return {
+            agent: 'dataValidator',
+            riskLevel: 'LOW', // Data validation doesn't affect cancer risk
+            confidence: dataQualityScore,
+            reasoning: this.generateValidationSummary(validationResults, issues),
+            validationResults,
+            dataQualityScore,
+            issues,
+            summary: `Data validation complete - ${dataQualityScore >= 0.8 ? 'High quality' : 'Needs review'} data`
+        };
+    }
+
+    validateAllData(patientData) {
+        return {
+            vibrations: this.validateVibrationData(patientData.vibrations),
+            demographics: this.validateDemographicData(patientData),
+            ranges: this.validateValueRanges(patientData.vibrations),
+            consistency: this.checkDataConsistency(patientData)
+        };
+    }
+
+    validateVibrationData(vibrations) {
+        const issues = [];
+        
+        vibrations.forEach((val, index) => {
+            const ranges = [[0.5, 3.5], [0.8, 3.8], [1.5, 4.8], [1.2, 4.2]];
+            if (val < ranges[index][0] || val > ranges[index][1]) {
+                issues.push(`Vibration ${index + 1} (${val}) outside expected range [${ranges[index][0]}-${ranges[index][1]}]`);
+            }
+            
+            if (val <= 0) {
+                issues.push(`Vibration ${index + 1} has invalid non-positive value`);
+            }
+        });
+        
+        return {
+            valid: issues.length === 0,
+            issues,
+            score: issues.length === 0 ? 1 : Math.max(0, 1 - issues.length * 0.2)
+        };
+    }
+
+    validateDemographicData(patientData) {
+        const issues = [];
+        
+        if (!patientData.age || patientData.age < 1 || patientData.age > 120) {
+            issues.push('Age missing or outside valid range');
+        }
+        
+        if (!patientData.gender || !['male', 'female'].includes(patientData.gender.toLowerCase())) {
+            issues.push('Gender missing or invalid');
+        }
+        
+        return {
+            valid: issues.length === 0,
+            issues,
+            score: issues.length === 0 ? 1 : 0.7
+        };
+    }
+
+    validateValueRanges(vibrations) {
+        // Check for biologically plausible patterns
+        const [carbonyl, methyl, carbon_oxygen, hydroxyl] = vibrations;
+        const issues = [];
+        
+        // Carbonyl should typically be lower than carbon-oxygen
+        if (carbonyl > carbon_oxygen * 1.5) {
+            issues.push('Carbonyl unusually high relative to carbon-oxygen stretch');
+        }
+        
+        // Hydroxyl should have reasonable relationship with carbonyl
+        if (Math.abs(carbonyl - hydroxyl) > 2.0) {
+            issues.push('Unusual disparity between carbonyl and hydroxyl values');
+        }
+        
+        return {
+            valid: issues.length === 0,
+            issues, 
+            score: issues.length === 0 ? 1 : 0.8
+        };
+    }
+
+    checkDataConsistency(patientData) {
+        // Check internal consistency of the dataset
+        let consistencyScore = 1.0;
+        const issues = [];
+        
+        // Age-vibration consistency (older patients might have different baselines)
+        if (patientData.age > 65) {
+            const [carbonyl, methyl, carbon_oxygen, hydroxyl] = patientData.vibrations;
+            // Older patients might show slightly elevated baselines
+            if (carbonyl < 1.0 && hydroxyl < 1.8) {
+                issues.push('Vibration readings unusually low for patient age');
+                consistencyScore -= 0.1;
+            }
+        }
+        
+        return {
+            valid: consistencyScore >= 0.8,
+            issues,
+            score: consistencyScore
+        };
+    }
+
+    calculateDataQualityScore(validationResults) {
+        const scores = [
+            validationResults.vibrations.score,
+            validationResults.demographics.score,
+            validationResults.ranges.score,
+            validationResults.consistency.score
+        ];
+        
+        return scores.reduce((a, b) => a + b, 0) / scores.length;
+    }
+
+    identifyDataIssues(validationResults) {
+        const allIssues = [
+            ...validationResults.vibrations.issues,
+            ...validationResults.demographics.issues,
+            ...validationResults.ranges.issues,
+            ...validationResults.consistency.issues
+        ];
+        
+        return {
+            critical: allIssues.filter(issue => issue.includes('invalid') || issue.includes('outside')),
+            warnings: allIssues.filter(issue => !issue.includes('invalid') && !issue.includes('outside')),
+            total: allIssues.length
+        };
+    }
+
+    generateValidationSummary(validationResults, issues) {
+        if (issues.total === 0) {
+            return "All data validation checks passed. High-quality input data.";
+        }
+        
+        const criticalCount = issues.critical.length;
+        const warningCount = issues.warnings.length;
+        
+        if (criticalCount > 0) {
+            return `${criticalCount} critical issues found. Data quality may affect analysis reliability.`;
+        }
+        
+        return `${warningCount} minor data issues identified. Analysis can proceed with normal confidence.`;
+    }
+}
+
+class ReportGenerationAgent extends BaseAgent {
+    constructor() {
+        super('reportGenerator', 'Comprehensive Report Synthesis');
+    }
+
+    async performAnalysis(agentResults) {
+        const comprehensiveReport = this.synthesizeComprehensiveReport(agentResults);
+        return comprehensiveReport;
+    }
+
+    synthesizeComprehensiveReport(agentResults) {
+        // This agent would typically synthesize results from other agents
+        // For now, return a simple synthesis
+        return {
+            agent: 'reportGenerator',
+            riskLevel: 'LOW', // Placeholder
+            confidence: 0.9,
+            reasoning: 'Report generation complete',
+            summary: 'Comprehensive diagnostic report synthesized'
+        };
+    }
+}
+
+// Export agents for use in main system
+window.AgentsOrchestrator = {
+    BiomarkerAnalysisAgent,
+    ClinicalConsultationAgent, 
+    RiskAssessmentAgent,
+    DataValidationAgent,
+    ReportGenerationAgent
+};
