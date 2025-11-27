@@ -123,14 +123,14 @@
             z-index: 1000;
         }
         
-        /* Educational Page Styles */
+        /* Enhanced Educational Page Styles */
         .educational-page {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: var(--light-bg);
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
             display: flex;
             flex-direction: column;
             z-index: 1500;
@@ -148,17 +148,37 @@
         .educational-header {
             text-align: center;
             margin-bottom: 40px;
+            padding: 30px 20px;
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-light) 100%);
+            border-radius: 15px;
+            color: white;
+            box-shadow: 0 10px 30px rgba(13, 74, 140, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .educational-header::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none"><path d="M0,0 L100,0 L100,100 Z" fill="rgba(255,255,255,0.1)"/></svg>');
+            background-size: cover;
         }
         
         .educational-title {
             font-size: 3rem;
-            color: var(--secondary-color);
             margin-bottom: 20px;
+            position: relative;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
         
         .educational-subtitle {
             font-size: 1.5rem;
-            color: var(--primary-color);
+            opacity: 0.9;
+            position: relative;
         }
         
         .educational-section {
@@ -167,6 +187,24 @@
             background: var(--white);
             border-radius: 15px;
             box-shadow: var(--shadow);
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .educational-section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .educational-section::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--primary-color), var(--primary-light));
         }
         
         .educational-section-title {
@@ -176,6 +214,14 @@
             text-align: center;
             padding-bottom: 10px;
             border-bottom: 2px solid rgba(13, 74, 140, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+        
+        .educational-section-title i {
+            font-size: 1.8rem;
         }
         
         .educational-text {
@@ -193,6 +239,18 @@
             margin-bottom: 15px;
             font-size: 1.2rem;
             line-height: 1.6;
+            position: relative;
+            padding-left: 30px;
+        }
+        
+        .educational-list li::before {
+            content: "•";
+            color: var(--primary-color);
+            font-weight: bold;
+            font-size: 1.5rem;
+            position: absolute;
+            left: 0;
+            top: -5px;
         }
         
         .educational-diagram {
@@ -208,6 +266,7 @@
             box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
             max-width: 800px;
             width: 100%;
+            border: 1px solid var(--border-color);
         }
         
         .diagram-title {
@@ -215,6 +274,10 @@
             font-size: 1.5rem;
             color: var(--primary-color);
             margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
         }
         
         .diagram-steps {
@@ -230,6 +293,12 @@
             background: #f0f7ff;
             border-radius: 8px;
             border-left: 4px solid var(--primary-color);
+            transition: all 0.3s;
+        }
+        
+        .diagram-step:hover {
+            background: #e1f0ff;
+            transform: translateX(5px);
         }
         
         .step-number {
@@ -244,6 +313,7 @@
             margin-right: 20px;
             font-weight: bold;
             font-size: 1.2rem;
+            box-shadow: 0 3px 5px rgba(13, 74, 140, 0.3);
         }
         
         .step-text {
@@ -257,6 +327,20 @@
             padding: 20px;
             background: #f8f9fa;
             border-radius: 10px;
+            border: 2px dashed var(--primary-color);
+            position: relative;
+        }
+        
+        .molecular-structure::before {
+            content: "🧬";
+            position: absolute;
+            top: -15px;
+            left: 20px;
+            background: white;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 1.2rem;
+            box-shadow: 0 3px 5px rgba(0,0,0,0.1);
         }
         
         .structure-formula {
@@ -264,11 +348,138 @@
             font-size: 2rem;
             margin: 15px 0;
             color: var(--primary-color);
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            display: inline-block;
+            box-shadow: 0 3px 5px rgba(0,0,0,0.1);
         }
         
         .structure-label {
             font-size: 1.1rem;
             color: var(--text-light);
+            margin-top: 10px;
+        }
+        
+        .functional-groups {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .functional-group {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+            text-align: center;
+            border-top: 4px solid var(--primary-color);
+            transition: transform 0.3s;
+        }
+        
+        .functional-group:hover {
+            transform: translateY(-5px);
+        }
+        
+        .group-icon {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            color: var(--primary-color);
+        }
+        
+        .group-name {
+            font-size: 1.3rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: var(--primary-color);
+        }
+        
+        .group-description {
+            font-size: 1rem;
+            color: var(--text-light);
+        }
+        
+        .system-features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .system-feature {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            border-left: 4px solid var(--primary-color);
+        }
+        
+        .feature-icon {
+            font-size: 1.8rem;
+            color: var(--primary-color);
+            background: #f0f7ff;
+            padding: 10px;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .feature-content {
+            flex: 1;
+        }
+        
+        .feature-title {
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: var(--primary-color);
+        }
+        
+        .feature-description {
+            font-size: 1rem;
+            color: var(--text-light);
+        }
+        
+        .spectroscopy-visual {
+            display: flex;
+            justify-content: center;
+            margin: 30px 0;
+        }
+        
+        .spectroscopy-container {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            max-width: 800px;
+            width: 100%;
+            text-align: center;
+        }
+        
+        .spectroscopy-title {
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+        
+        .spectroscopy-image {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+        
+        .spectroscopy-caption {
+            font-size: 1rem;
+            color: var(--text-light);
+            font-style: italic;
         }
         
         .next-page-btn {
@@ -286,6 +497,9 @@
             transition: transform 0.3s, box-shadow 0.3s;
             box-shadow: 0 4px 6px rgba(13, 74, 140, 0.2);
             z-index: 1600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
         
         .next-page-btn:hover {
@@ -1422,6 +1636,14 @@
             .login-form-container {
                 padding: 30px 20px;
             }
+            
+            .functional-groups {
+                grid-template-columns: 1fr;
+            }
+            
+            .system-features {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
@@ -1438,7 +1660,7 @@
         </div>
     </div>
 
-    <!-- Educational Page About Spectroscopy -->
+    <!-- Enhanced Educational Page About Spectroscopy -->
     <div class="educational-page" id="educational-page">
         <div class="educational-content">
             <div class="educational-header">
@@ -1447,14 +1669,14 @@
             </div>
             
             <div class="educational-section">
-                <h2 class="educational-section-title">What is Photoacoustic Spectroscopy?</h2>
+                <h2 class="educational-section-title"><i class="fas fa-lightbulb"></i> What is Photoacoustic Spectroscopy?</h2>
                 <p class="educational-text">
                     Photoacoustic spectroscopy is an advanced analytical technique that combines light absorption with sound detection. When molecules absorb light energy, they heat up and expand, creating pressure waves that can be detected as sound. This technique is particularly valuable in biomedical applications because it provides detailed molecular information without invasive procedures.
                 </p>
                 
                 <div class="educational-diagram">
                     <div class="diagram-container">
-                        <h3 class="diagram-title">Photoacoustic Spectroscopy Process</h3>
+                        <h3 class="diagram-title"><i class="fas fa-project-diagram"></i> Photoacoustic Spectroscopy Process</h3>
                         <div class="diagram-steps">
                             <div class="diagram-step">
                                 <div class="step-number">1</div>
@@ -1483,10 +1705,23 @@
                         </div>
                     </div>
                 </div>
+                
+                <div class="spectroscopy-visual">
+                    <div class="spectroscopy-container">
+                        <h3 class="spectroscopy-title">Photoacoustic Spectroscopy Visualization</h3>
+                        <div style="background: linear-gradient(90deg, #0d4a8c, #0d7ba8); height: 200px; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.2rem;">
+                            <div style="text-align: center;">
+                                <i class="fas fa-wave-square" style="font-size: 3rem; margin-bottom: 10px;"></i>
+                                <div>Light → Tissue → Sound Waves → Analysis</div>
+                            </div>
+                        </div>
+                        <p class="spectroscopy-caption">Visual representation of the photoacoustic spectroscopy process</p>
+                    </div>
+                </div>
             </div>
             
             <div class="educational-section">
-                <h2 class="educational-section-title">Lactic Acid as a Cancer Biomarker</h2>
+                <h2 class="educational-section-title"><i class="fas fa-dna"></i> Lactic Acid as a Cancer Biomarker</h2>
                 <p class="educational-text">
                     Cancer cells exhibit altered metabolism known as the Warburg effect, where they preferentially use glycolysis for energy production even in the presence of oxygen. This metabolic shift results in increased lactic acid production, making lactic acid levels and molecular structure valuable indicators of cancerous activity.
                 </p>
@@ -1495,29 +1730,82 @@
                     <h3>Lactic Acid Molecular Structure</h3>
                     <div class="structure-formula">CH₃-CH(OH)-COOH</div>
                     <div class="structure-label">Key functional groups analyzed in our system:</div>
-                    <ul class="educational-list">
-                        <li><strong>Carbonyl Group (-C=O):</strong> Stretching vibrations around 1720 cm⁻¹</li>
-                        <li><strong>Methyl Group (-CH₃):</strong> Deformation vibrations around 1300 cm⁻¹</li>
-                        <li><strong>Carbon-Oxygen Stretch (-C-OH):</strong> Vibrations around 1100 cm⁻¹</li>
-                        <li><strong>Hydroxyl Group (-O-H):</strong> Stretching vibrations around 3500 cm⁻¹</li>
-                    </ul>
+                    
+                    <div class="functional-groups">
+                        <div class="functional-group">
+                            <div class="group-icon"><i class="fas fa-atom"></i></div>
+                            <div class="group-name">Carbonyl Group (-C=O)</div>
+                            <div class="group-description">Stretching vibrations around 1720 cm⁻¹</div>
+                        </div>
+                        <div class="functional-group">
+                            <div class="group-icon"><i class="fas fa-magnet"></i></div>
+                            <div class="group-name">Methyl Group (-CH₃)</div>
+                            <div class="group-description">Deformation vibrations around 1300 cm⁻¹</div>
+                        </div>
+                        <div class="functional-group">
+                            <div class="group-icon"><i class="fas fa-link"></i></div>
+                            <div class="group-name">Carbon-Oxygen Stretch (-C-OH)</div>
+                            <div class="group-description">Vibrations around 1100 cm⁻¹</div>
+                        </div>
+                        <div class="functional-group">
+                            <div class="group-icon"><i class="fas fa-tint"></i></div>
+                            <div class="group-name">Hydroxyl Group (-O-H)</div>
+                            <div class="group-description">Stretching vibrations around 3500 cm⁻¹</div>
+                        </div>
+                    </div>
                 </div>
             </div>
             
             <div class="educational-section">
-                <h2 class="educational-section-title">How Our System Works</h2>
+                <h2 class="educational-section-title"><i class="fas fa-robot"></i> How Our System Works</h2>
                 <p class="educational-text">
                     Our AI-powered system analyzes photoacoustic spectroscopy data to detect subtle changes in lactic acid molecular vibrations that indicate cancerous metabolic activity. The process integrates cutting-edge spectroscopy with advanced machine learning algorithms.
                 </p>
                 
-                <ul class="educational-list">
-                    <li><strong>Data Collection:</strong> Photoacoustic spectroscopy equipment captures molecular vibration data from tissue samples</li>
-                    <li><strong>Signal Processing:</strong> Raw acoustic signals are processed to extract specific molecular vibration frequencies</li>
-                    <li><strong>Feature Extraction:</strong> Key lactic acid molecular features are identified and quantified</li>
-                    <li><strong>AI Analysis:</strong> Machine learning models compare the extracted features against known cancer biomarkers</li>
-                    <li><strong>Risk Assessment:</strong> The system calculates cancer probability based on metabolic alterations</li>
-                    <li><strong>Clinical Decision Support:</strong> Results are presented with actionable recommendations for healthcare providers</li>
-                </ul>
+                <div class="system-features">
+                    <div class="system-feature">
+                        <div class="feature-icon"><i class="fas fa-vial"></i></div>
+                        <div class="feature-content">
+                            <div class="feature-title">Data Collection</div>
+                            <div class="feature-description">Photoacoustic spectroscopy equipment captures molecular vibration data from tissue samples</div>
+                        </div>
+                    </div>
+                    <div class="system-feature">
+                        <div class="feature-icon"><i class="fas fa-wave-square"></i></div>
+                        <div class="feature-content">
+                            <div class="feature-title">Signal Processing</div>
+                            <div class="feature-description">Raw acoustic signals are processed to extract specific molecular vibration frequencies</div>
+                        </div>
+                    </div>
+                    <div class="system-feature">
+                        <div class="feature-icon"><i class="fas fa-chart-line"></i></div>
+                        <div class="feature-content">
+                            <div class="feature-title">Feature Extraction</div>
+                            <div class="feature-description">Key lactic acid molecular features are identified and quantified</div>
+                        </div>
+                    </div>
+                    <div class="system-feature">
+                        <div class="feature-icon"><i class="fas fa-brain"></i></div>
+                        <div class="feature-content">
+                            <div class="feature-title">AI Analysis</div>
+                            <div class="feature-description">Machine learning models compare the extracted features against known cancer biomarkers</div>
+                        </div>
+                    </div>
+                    <div class="system-feature">
+                        <div class="feature-icon"><i class="fas fa-clipboard-check"></i></div>
+                        <div class="feature-content">
+                            <div class="feature-title">Risk Assessment</div>
+                            <div class="feature-description">The system calculates cancer probability based on metabolic alterations</div>
+                        </div>
+                    </div>
+                    <div class="system-feature">
+                        <div class="feature-icon"><i class="fas fa-user-md"></i></div>
+                        <div class="feature-content">
+                            <div class="feature-title">Clinical Decision Support</div>
+                            <div class="feature-description">Results are presented with actionable recommendations for healthcare providers</div>
+                        </div>
+                    </div>
+                </div>
                 
                 <p class="educational-text">
                     This non-invasive approach allows for early detection of metabolic changes associated with cancer, potentially enabling intervention before structural changes become apparent through traditional imaging methods.
@@ -1525,7 +1813,7 @@
             </div>
             
             <div class="educational-section">
-                <h2 class="educational-section-title">For Healthcare Professionals</h2>
+                <h2 class="educational-section-title"><i class="fas fa-user-md"></i> For Healthcare Professionals</h2>
                 <p class="educational-text">
                     This system is designed to complement your clinical expertise by providing additional metabolic insights. The interface allows you to:
                 </p>
@@ -1542,6 +1830,19 @@
                 <p class="educational-text">
                     The system continuously learns from new data, improving its diagnostic accuracy over time while maintaining transparency in its decision-making process.
                 </p>
+                
+                <div class="spectroscopy-visual">
+                    <div class="spectroscopy-container">
+                        <h3 class="spectroscopy-title">Clinical Workflow Integration</h3>
+                        <div style="background: linear-gradient(135deg, #2ecc71, #27ae60); height: 150px; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.2rem;">
+                            <div style="text-align: center;">
+                                <i class="fas fa-heartbeat" style="font-size: 3rem; margin-bottom: 10px;"></i>
+                                <div>Patient Data → Spectroscopy → AI Analysis → Clinical Decision</div>
+                            </div>
+                        </div>
+                        <p class="spectroscopy-caption">Seamless integration of spectroscopy data into clinical workflow</p>
+                    </div>
+                </div>
             </div>
         </div>
         
